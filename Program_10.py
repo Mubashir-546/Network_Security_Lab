@@ -1,22 +1,17 @@
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
+p = 11
+q = 13
 
-# Generate RSA Keys
-key = RSA.generate(2048)
+n = p * q
+phi = (p-1)*(q-1)
 
-public_key = key.publickey()
-private_key = key
+e = 7
+d = 103
 
-encryptor = PKCS1_OAEP.new(public_key)
-decryptor = PKCS1_OAEP.new(private_key)
+msg = int(input("Message: "))
 
-plaintext = input("Enter plaintext: ")
+cipher = pow(msg, e, n)
 
-ciphertext = encryptor.encrypt(plaintext.encode())
+plain = pow(cipher, d, n)
 
-print("Encrypted (Hex):")
-print(ciphertext.hex())
-
-decrypted = decryptor.decrypt(ciphertext)
-
-print("Decrypted Text:", decrypted.decode())
+print("Encrypted:", cipher)
+print("Decrypted:", plain)
